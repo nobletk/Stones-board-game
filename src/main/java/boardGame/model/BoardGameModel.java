@@ -11,20 +11,20 @@ public class BoardGameModel {
     private final Stone[] stones;
 
     public BoardGameModel() {
-        this(new Stone(StoneColor.BLUE_1, new Position(1, 0)),
-                new Stone(StoneColor.BLUE_2, new Position(0, 0)),
-                new Stone(StoneColor.BLUE_3, new Position(0, 1)),
-                new Stone(StoneColor.BLUE_4, new Position(0, 2)),
-                new Stone(StoneColor.BLUE_5, new Position(0, 3)),
-                new Stone(StoneColor.BLUE_6, new Position(0, 4)),
-                new Stone(StoneColor.BLUE_7, new Position(1, 4)),
-                new Stone(StoneColor.RED_1, new Position(3, 0)),
-                new Stone(StoneColor.RED_2, new Position(4, 0)),
-                new Stone(StoneColor.RED_3, new Position(4, 1)),
-                new Stone(StoneColor.RED_4, new Position(4, 2)),
-                new Stone(StoneColor.RED_5, new Position(4, 3)),
-                new Stone(StoneColor.RED_6, new Position(4, 4)),
-                new Stone(StoneColor.RED_7, new Position(3, 4)));
+        this(new Stone(StoneColor.BLUE, new Position(1, 0)),
+                new Stone(StoneColor.BLUE, new Position(0, 0)),
+                new Stone(StoneColor.BLUE, new Position(0, 1)),
+                new Stone(StoneColor.BLUE, new Position(0, 2)),
+                new Stone(StoneColor.BLUE, new Position(0, 3)),
+                new Stone(StoneColor.BLUE, new Position(0, 4)),
+                new Stone(StoneColor.BLUE, new Position(1, 4)),
+                new Stone(StoneColor.RED, new Position(3, 0)),
+                new Stone(StoneColor.RED, new Position(4, 0)),
+                new Stone(StoneColor.RED, new Position(4, 1)),
+                new Stone(StoneColor.RED, new Position(4, 2)),
+                new Stone(StoneColor.RED, new Position(4, 3)),
+                new Stone(StoneColor.RED, new Position(4, 4)),
+                new Stone(StoneColor.RED, new Position(3, 4)));
     }
 
     public BoardGameModel(Stone... stones) {
@@ -89,8 +89,8 @@ public class BoardGameModel {
     }
 
     public static boolean isOnBoard(Position position) {
-        return 0 <= position.row() && position.col() < BoardSize
-                && 0 <= position.row() && position.col() < BoardSize;
+        return 0 <= position.row() && position.row() < BoardSize
+                && 0 <= position.col() && position.col() < BoardSize;
     }
 
     public List<Position> getStonePositions() {
