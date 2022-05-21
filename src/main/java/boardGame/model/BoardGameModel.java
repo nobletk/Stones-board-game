@@ -34,8 +34,8 @@ public class BoardGameModel {
 
     private void checkStones(Stone[] stones) {
         var seen = new HashSet<Position>();
-        for(var stone : stones){
-            if(!isOnBoard(stone.getPosition()) || seen.contains(stone.getPosition())){
+        for (var stone : stones) {
+            if (!isOnBoard(stone.getPosition()) || seen.contains(stone.getPosition())) {
                 throw new IllegalArgumentException();
             }
             seen.add(stone.getPosition());
@@ -63,15 +63,29 @@ public class BoardGameModel {
             throw new IllegalArgumentException();
         }
         Position newPosition = stones[stoneNumber].getPosition().moveTo(direction);
-        if(!isOnBoard(newPosition)) {
+        if (!isOnBoard(newPosition)) {
             return false;
         }
-        for(var stone : stones) {
+        for (var stone : stones) {
             if (stone.getPosition().equals(newPosition)) {
                 return false;
             }
         }
         return true;
+    }
+
+    public Set<StoneDirection> getValidMoves(int stoneNumber) {
+        EnumSet<StoneDirection> validMoves = EnumSet.noneOf(StoneDirection.class);
+        for (var direction : StoneDirection.values()) {
+            if (isValidMove(stoneNumber, direction)) {
+                validMoves.add(direction);
+            }
+        }
+        return validMoves;
+    }
+
+    public void move(int stoneNumber, StoneDirection direction) {
+        stones[stoneNumber].moveTo(direction);
     }
 
     public static boolean isOnBoard(Position position) {
@@ -90,7 +104,7 @@ public class BoardGameModel {
     public OptionalInt getStoneNumber(Position position) {
         for (int i = 0; i < stones.length; i++) {
             if (stones[i].getPosition().equals(position)) {
-              return OptionalInt.of(i);
+                return OptionalInt.of(i);
             }
         }
         return OptionalInt.empty();
