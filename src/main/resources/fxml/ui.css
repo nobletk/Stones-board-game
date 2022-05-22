@@ -3,7 +3,7 @@
 }
 
 .selected {
-    -fx-background-color: silver;
+    -fx-background-color: yellow;
 }
 
 .selectable {
@@ -11,5 +11,5 @@
 }
 
 .square:hover {
-    -fx-background-color: ghostwhite;
+    -fx-background-color: rgba(248, 248, 255, 0.54);
 }
