@@ -22,8 +22,8 @@
    <children>
       <Label text="First Player Name (Blue) :" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
       <Label text="Second Player Name (Red):" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-      <TextField text="Enter 1st player name!" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <TextField text="Enter 2nd player name!" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <TextField fx:id="firstPlayerInput" text="Enter 1st player name!" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <TextField fx:id="secondPlayerInput" text="Enter 2nd player name!" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       <Button fx:id="start" mnemonicParsing="false" onAction="#switchScene" text="Start" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
       <Label style="-fx-font-size: 25;" text="Welcome to Board Game!" GridPane.columnIndex="1" />
    </children>

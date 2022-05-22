@@ -36,7 +36,7 @@ public class Stone {
 
     public static void main(String[] args) {
         Stone stone = new Stone(StoneColor.BLUE, new Position(0,0) );
-        stone.positionProperty().addListener((observableValue, oldPosition, newPosition) ->{
+        stone.positionProperty().addListener((observableValue, oldPosition, newPosition) -> {
             System.out.printf("%s -> %s%n", oldPosition.toString(), newPosition.toString());
         });
         System.out.println(stone);
