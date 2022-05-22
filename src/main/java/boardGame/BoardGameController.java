@@ -1,5 +1,7 @@
 package boardGame;
 
+import boardGame.model.*;
+
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ObservableValue;
@@ -15,10 +17,6 @@ import org.tinylog.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import boardGame.model.BoardGameModel;
-import boardGame.model.Position;
-import boardGame.model.StoneDirection;
 
 
 public class BoardGameController {
@@ -37,7 +35,9 @@ public class BoardGameController {
 
     private SelectionPhase selectionPhase = SelectionPhase.SELECT_FROM;
 
-    private List<Position> selectablePositions = new ArrayList<>();
+    private List<Position> selectableBluePositions = new ArrayList<>();
+    private List<Position> selectableRedPositions = new ArrayList<>();
+
 
     private Position selected;
 
@@ -94,6 +94,16 @@ public class BoardGameController {
         numberOfTurnsField.textProperty().bind(numberOfTurns.asString());
     }
 
+    private void checkWinner() {
+        if (selectableRedPositions.containsAll(model.blueInitialPositions)) {
+
+            Logger.debug("Red player wins!");
+        }
+        if (selectableBluePositions.containsAll(model.redInitialPositions)) {
+            Logger.debug("Blue player wins!");
+        }
+    }
+
     @FXML
     private void handleMouseClick(MouseEvent mouseEvent) {
         var square = (StackPane) mouseEvent.getSource();
@@ -105,22 +115,46 @@ public class BoardGameController {
     }
 
     private void handleClickOnSquare(Position position) {
-        switch (selectionPhase) {
-            case SELECT_FROM -> {
-                if (selectablePositions.contains(position)) {
-                    selectPosition(position);
-                    alterSelectionPhase();
+        if (numberOfTurns.getValue() % 2 == 0) {
+            switch (selectionPhase) {
+                case SELECT_FROM -> {
+                    if (selectableBluePositions.contains(position)) {
+                        selectPosition(position);
+                        alterSelectionPhase();
+                    }
+                }
+                case SELECT_TO -> {
+                    if (selectableBluePositions.contains(position)) {
+                        var stoneNumber = model.getBlueStoneNumber(selected).getAsInt();
+                        var direction = StoneDirection.of(position.row() - selected.row(), position.col() - selected.col());
+                        Logger.debug("Moving stone {} {}", stoneNumber, direction);
+                        model.move(stoneNumber, direction);
+                        numberOfTurns.set(numberOfTurns.get() + 1);
+                        deselectSelectedPosition();
+                        alterSelectionPhase();
+                        checkWinner();
+                    }
                 }
             }
-            case SELECT_TO -> {
-                if (selectablePositions.contains(position)) {
-                    var stoneNumber = model.getStoneNumber(selected).getAsInt();
-                    var direction = StoneDirection.of(position.row() - selected.row(), position.col() - selected.col());
-                    Logger.debug("Moving stone {} {}", stoneNumber, direction);
-                    model.move(stoneNumber, direction);
-                    numberOfTurns.set(numberOfTurns.get() + 1);
-                    deselectSelectedPosition();
-                    alterSelectionPhase();
+        } else {
+            switch (selectionPhase) {
+                case SELECT_FROM -> {
+                    if (selectableRedPositions.contains(position)) {
+                        selectPosition(position);
+                        alterSelectionPhase();
+                    }
+                }
+                case SELECT_TO -> {
+                    if (selectableRedPositions.contains(position)) {
+                        var stoneNumber = model.getRedStoneNumber(selected).getAsInt();
+                        var direction = StoneDirection.of(position.row() - selected.row(), position.col() - selected.col());
+                        Logger.debug("Moving stone {} {}", stoneNumber, direction);
+                        model.move(stoneNumber, direction);
+                        numberOfTurns.set(numberOfTurns.get() + 1);
+                        deselectSelectedPosition();
+                        alterSelectionPhase();
+                        checkWinner();
+                    }
                 }
             }
         }
@@ -154,30 +188,59 @@ public class BoardGameController {
     }
 
     private void setSelectablePositions() {
-        selectablePositions.clear();
-        switch (selectionPhase) {
-            case SELECT_FROM -> selectablePositions.addAll(model.getStonePositions());
-            case SELECT_TO -> {
-                var stoneNumber = model.getStoneNumber(selected).getAsInt();
-                for (var direction : model.getValidMoves(stoneNumber)) {
-                    selectablePositions.add(selected.moveTo(direction));
+        if (numberOfTurns.getValue() % 2 == 0) {
+            selectableBluePositions.clear();
+            switch (selectionPhase) {
+                case SELECT_FROM -> selectableBluePositions.addAll(model.getBluePositions());
+                case SELECT_TO -> {
+                    var stoneNumber = model.getBlueStoneNumber(selected).getAsInt();
+                    for (var direction : model.getValidMoves(stoneNumber)) {
+                        selectableBluePositions.add(selected.moveTo(direction));
+                    }
+                }
+            }
+        } else {
+            selectableRedPositions.clear();
+            switch (selectionPhase) {
+                case SELECT_FROM -> selectableRedPositions.addAll(model.getRedPositions());
+                case SELECT_TO -> {
+                    var stoneNumber = model.getRedStoneNumber(selected).getAsInt();
+                    for (var direction : model.getValidMoves(stoneNumber)) {
+                        selectableRedPositions.add(selected.moveTo(direction));
+                    }
                 }
             }
         }
     }
 
     private void showSelectablePositions() {
-        for (var selectablePosition : selectablePositions) {
-            var square = getSquare(selectablePosition);
-            square.getStyleClass().add("selectable");
+        if (numberOfTurns.getValue() % 2 == 0) {
+            for (var selectablePosition : selectableBluePositions) {
+                var square = getSquare(selectablePosition);
+                square.getStyleClass().add("selectable");
+            }
+        } else {
+            for (var selectablePosition : selectableRedPositions) {
+                var square = getSquare(selectablePosition);
+                square.getStyleClass().add("selectable");
+            }
         }
+
     }
 
     private void hideSelectablePositions() {
-        for (var selectablePosition : selectablePositions) {
-            var square = getSquare(selectablePosition);
-            square.getStyleClass().remove("selectable");
+        if (numberOfTurns.getValue() % 2 == 0) {
+            for (var selectablePosition : selectableBluePositions) {
+                var square = getSquare(selectablePosition);
+                square.getStyleClass().remove("selectable");
+            }
+        } else {
+            for (var selectablePosition : selectableRedPositions) {
+                var square = getSquare(selectablePosition);
+                square.getStyleClass().remove("selectable");
+            }
         }
+
     }
 
     private StackPane getSquare(Position position) {

@@ -10,6 +10,9 @@ public class BoardGameModel {
 
     private final Stone[] stones;
 
+    public List<Position> blueInitialPositions = new ArrayList<>();
+    public List<Position> redInitialPositions = new ArrayList<>();
+
     public BoardGameModel() {
         this(new Stone(StoneColor.BLUE, new Position(1, 0)),
                 new Stone(StoneColor.BLUE, new Position(0, 0)),
@@ -37,6 +40,11 @@ public class BoardGameModel {
         for (var stone : stones) {
             if (!isOnBoard(stone.getPosition()) || seen.contains(stone.getPosition())) {
                 throw new IllegalArgumentException();
+            }
+            if (stone.getColor() == StoneColor.BLUE) {
+                blueInitialPositions.add(stone.getPosition());
+            } else {
+                redInitialPositions.add(stone.getPosition());
             }
             seen.add(stone.getPosition());
         }
@@ -93,17 +101,38 @@ public class BoardGameModel {
                 && 0 <= position.col() && position.col() < BoardSize;
     }
 
-    public List<Position> getStonePositions() {
-        List<Position> positions = new ArrayList<>(stones.length);
+    public List<Position> getBluePositions() {
+        List<Position> positions = new ArrayList<>(7);
         for (var stone : stones) {
-            positions.add(stone.getPosition());
+            if (stone.getColor() == StoneColor.BLUE) {
+                positions.add(stone.getPosition());
+            }
         }
         return positions;
     }
 
-    public OptionalInt getStoneNumber(Position position) {
-        for (int i = 0; i < stones.length; i++) {
-            if (stones[i].getPosition().equals(position)) {
+    public List<Position> getRedPositions() {
+        List<Position> positions = new ArrayList<>(7);
+        for (var stone : stones) {
+            if (stone.getColor() == StoneColor.RED) {
+                positions.add(stone.getPosition());
+            }
+        }
+        return positions;
+    }
+
+    public OptionalInt getBlueStoneNumber(Position position) {
+        for (int i = 0; i < 8; i++) {
+            if (stones[i].getPosition().equals(position) && getStoneColor(i) == StoneColor.BLUE) {
+                return OptionalInt.of(i);
+            }
+        }
+        return OptionalInt.empty();
+    }
+
+    public OptionalInt getRedStoneNumber(Position position) {
+        for (int i = 7; i < 14; i++) {
+            if (stones[i].getPosition().equals(position) && getStoneColor(i) == StoneColor.RED) {
                 return OptionalInt.of(i);
             }
         }
@@ -121,5 +150,7 @@ public class BoardGameModel {
     public static void main(String[] args) {
         BoardGameModel model = new BoardGameModel();
         System.out.println(model);
+        System.out.println(model.blueInitialPositions);
+        System.out.println(model.redInitialPositions);
     }
 }
