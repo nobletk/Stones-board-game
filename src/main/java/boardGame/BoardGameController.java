@@ -1,7 +1,10 @@
 package boardGame;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -44,9 +47,15 @@ public class BoardGameController {
     private GridPane gameBoard;
 
     @FXML
+    private TextField numberOfTurnsField;
+
+    private IntegerProperty numberOfTurns = new SimpleIntegerProperty();
+
+    @FXML
     private void initialize() {
         createBoard();
         createStones();
+        createBindings();
         setSelectablePositions();
         showSelectablePositions();
     }
@@ -81,6 +90,10 @@ public class BoardGameController {
         return stone;
     }
 
+    private void createBindings() {
+        numberOfTurnsField.textProperty().bind(numberOfTurns.asString());
+    }
+
     @FXML
     private void handleMouseClick(MouseEvent mouseEvent) {
         var square = (StackPane) mouseEvent.getSource();
@@ -105,6 +118,7 @@ public class BoardGameController {
                     var direction = StoneDirection.of(position.row() - selected.row(), position.col() - selected.col());
                     Logger.debug("Moving stone {} {}", stoneNumber, direction);
                     model.move(stoneNumber, direction);
+                    numberOfTurns.set(numberOfTurns.get() + 1);
                     deselectSelectedPosition();
                     alterSelectionPhase();
                 }
