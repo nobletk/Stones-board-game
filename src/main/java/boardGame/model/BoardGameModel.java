@@ -4,6 +4,9 @@ import javafx.beans.property.ObjectProperty;
 
 import java.util.*;
 
+/**
+ * Class representing the board game model, stones initial positioning and the rules of the game.
+ */
 public class BoardGameModel {
 
     public static int BoardSize = 5;
@@ -13,6 +16,9 @@ public class BoardGameModel {
     public List<Position> blueInitialPositions = new ArrayList<>();
     public List<Position> redInitialPositions = new ArrayList<>();
 
+    /**
+     * Class that represents the initial positioning of the stones corresponding to row and column.
+     */
     public BoardGameModel() {
         this(new Stone(StoneColor.BLUE, new Position(1, 0)),
                 new Stone(StoneColor.BLUE, new Position(0, 0)),
@@ -50,22 +56,54 @@ public class BoardGameModel {
         }
     }
 
+    /**
+     * Returns the number of the stones on the game board.
+     *
+     * @return the number of the stones
+     */
     public int getStoneCount() {
         return stones.length;
     }
 
+    /**
+     * Returns the color the stone specified by the number given.
+     *
+     * @param stoneNumber the value representing the stone number
+     * @return the stone color whether blue or red
+     */
     public StoneColor getStoneColor(int stoneNumber) {
         return stones[stoneNumber].getColor();
     }
 
+    /**
+     * Returns the stone position on the game board for the specific stone
+     * according to the stone number specified.
+     *
+     * @param stoneNumber the value representing the stone number
+     * @return the stone position on the game board
+     */
     public Position getStonePosition(int stoneNumber) {
         return stones[stoneNumber].getPosition();
     }
 
+    /**
+     * Returns an objectProperty wrapping a list of position of
+     * the specified stone.
+     *
+     * @param stoneNumber the value representing the stone number
+     * @return an objectProperty wrapping a list of position of the specified stone.
+     */
     public ObjectProperty<Position> positionProperty(int stoneNumber) {
         return stones[stoneNumber].positionProperty();
     }
 
+    /**
+     * Returns boolean value checking if a move is valid or not for the specified stone number.
+     *
+     * @param stoneNumber the value representing the stone number
+     * @param direction   the movement of the stone
+     * @return boolean value whether the move is valid or not
+     */
     public boolean isValidMove(int stoneNumber, StoneDirection direction) {
         if (stoneNumber < 0 || stoneNumber >= stones.length) {
             throw new IllegalArgumentException();
@@ -82,6 +120,12 @@ public class BoardGameModel {
         return true;
     }
 
+    /**
+     * A set that contains all possible moves for the specified stone number.
+     *
+     * @param stoneNumber the value representing the stone number
+     * @return a set containing all possible moves for that stone
+     */
     public Set<StoneDirection> getValidMoves(int stoneNumber) {
         EnumSet<StoneDirection> validMoves = EnumSet.noneOf(StoneDirection.class);
         for (var direction : StoneDirection.values()) {
@@ -92,15 +136,32 @@ public class BoardGameModel {
         return validMoves;
     }
 
+    /**
+     * Returns the new position of the moving stone.
+     *
+     * @param stoneNumber the value representing the stone number
+     * @param direction   the new position of the stone
+     */
     public void move(int stoneNumber, StoneDirection direction) {
         stones[stoneNumber].moveTo(direction);
     }
 
+    /**
+     * Returns a boolean value of whether the position is or isn't on the board.
+     *
+     * @param position the position meant to be checked
+     * @return a boolean value of whether the position is or isn't on the board
+     */
     public static boolean isOnBoard(Position position) {
         return 0 <= position.row() && position.row() < BoardSize
                 && 0 <= position.col() && position.col() < BoardSize;
     }
 
+    /**
+     * Returns a list of current positioning of the blue stones.
+     *
+     * @return a list of current positioning of the blue stones
+     */
     public List<Position> getBluePositions() {
         List<Position> positions = new ArrayList<>(7);
         for (var stone : stones) {
@@ -111,6 +172,11 @@ public class BoardGameModel {
         return positions;
     }
 
+    /**
+     * Returns a list of current positioning of the red stones.
+     *
+     * @return a list of current positioning of the red stones
+     */
     public List<Position> getRedPositions() {
         List<Position> positions = new ArrayList<>(7);
         for (var stone : stones) {
@@ -121,6 +187,12 @@ public class BoardGameModel {
         return positions;
     }
 
+    /**
+     * Returns an optional integer number of the blue stone in a specific position.
+     *
+     * @param position the position of the blue stone
+     * @return an optional integer number of the blue stone
+     */
     public OptionalInt getBlueStoneNumber(Position position) {
         for (int i = 0; i < 8; i++) {
             if (stones[i].getPosition().equals(position) && getStoneColor(i) == StoneColor.BLUE) {
@@ -130,6 +202,12 @@ public class BoardGameModel {
         return OptionalInt.empty();
     }
 
+    /**
+     * Returns an optional integer number of the red stone in a specific position.
+     *
+     * @param position the position of the red stone
+     * @return an optional integer number of the red stone
+     */
     public OptionalInt getRedStoneNumber(Position position) {
         for (int i = 7; i < 14; i++) {
             if (stones[i].getPosition().equals(position) && getStoneColor(i) == StoneColor.RED) {
@@ -139,6 +217,11 @@ public class BoardGameModel {
         return OptionalInt.empty();
     }
 
+    /**
+     * Returns a string of joined elements.
+     *
+     * @returna string of joined elements
+     */
     public String toString() {
         StringJoiner joiner = new StringJoiner(",\n", "[", "]");
         for (var stone : stones) {
