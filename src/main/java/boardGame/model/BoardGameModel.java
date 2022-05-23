@@ -41,6 +41,10 @@ public class BoardGameModel {
         this.stones = stones.clone();
     }
 
+    /**
+     * creating a HashSet for the stones on the board and adding each color to its separate list.
+     * @param stones the array of stones on the board
+     */
     private void checkStones(Stone[] stones) {
         var seen = new HashSet<Position>();
         for (var stone : stones) {
