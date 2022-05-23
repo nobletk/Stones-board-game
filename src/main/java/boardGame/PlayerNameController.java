@@ -26,14 +26,6 @@ public class PlayerNameController {
     @FXML
     private TextField secondPlayerInput;
 
-    public TextField getFirstPlayerInput() {
-        return firstPlayerInput;
-    }
-
-    public TextField getSecondPlayerInput() {
-        return secondPlayerInput;
-    }
-
     @FXML
     protected void sessionInfoToJson() throws IOException {
 
