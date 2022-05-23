@@ -101,10 +101,10 @@ public class BoardGameController {
 
     private void checkWinner() {
         if (selectableRedPositions.containsAll(model.blueInitialPositions)) {
-            Logger.debug("{} is the winner!", nameController.getSecondPlayerInput().toString());
+            Logger.debug("RED is the winner!");
         }
         if (selectableBluePositions.containsAll(model.redInitialPositions)) {
-            Logger.debug("{} is the winner!", nameController.getFirstPlayerInput().toString());
+            Logger.debug("BLUE is the winner!");
         }
     }
 
