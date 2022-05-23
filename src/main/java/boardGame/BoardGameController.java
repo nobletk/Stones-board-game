@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * Class representing the board game controller including the rules of the game.
+ */
 public class BoardGameController {
 
     private enum SelectionPhase {
@@ -48,6 +51,8 @@ public class BoardGameController {
 
     @FXML
     private TextField numberOfTurnsField;
+
+    PlayerNameController nameController = new PlayerNameController();
 
     private IntegerProperty numberOfTurns = new SimpleIntegerProperty();
 
@@ -96,11 +101,10 @@ public class BoardGameController {
 
     private void checkWinner() {
         if (selectableRedPositions.containsAll(model.blueInitialPositions)) {
-
-            Logger.debug("Red player wins!");
+            Logger.debug("{} is the winner!", nameController.getSecondPlayerInput().toString());
         }
         if (selectableBluePositions.containsAll(model.redInitialPositions)) {
-            Logger.debug("Blue player wins!");
+            Logger.debug("{} is the winner!", nameController.getFirstPlayerInput().toString());
         }
     }
 

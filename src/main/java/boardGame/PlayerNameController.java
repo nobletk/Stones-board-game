@@ -1,6 +1,7 @@
 package boardGame;
 
 import com.google.gson.GsonBuilder;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,8 +26,17 @@ public class PlayerNameController {
     @FXML
     private TextField secondPlayerInput;
 
+    public TextField getFirstPlayerInput() {
+        return firstPlayerInput;
+    }
+
+    public TextField getSecondPlayerInput() {
+        return secondPlayerInput;
+    }
+
     @FXML
     protected void sessionInfoToJson() throws IOException {
+
         var gson = new GsonBuilder().setPrettyPrinting().create();
 
         var gameInfo = new GameSessionInformation();
