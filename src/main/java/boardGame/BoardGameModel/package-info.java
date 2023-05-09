@@ -1,4 +1,4 @@
 /**
  * Defines the board game model.
  */
-package boardGame.model;
+package boardGame.BoardGameModel;

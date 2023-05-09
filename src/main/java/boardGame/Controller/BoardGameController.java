@@ -1,7 +1,8 @@
-package boardGame;
+package boardGame.Controller;
 
-import boardGame.model.*;
-
+import boardGame.BoardGameModel.BoardGameModel;
+import boardGame.Movement.Position;
+import boardGame.Stone.StoneDirection;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ObservableValue;
@@ -12,7 +13,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-
 import org.tinylog.Logger;
 
 import java.util.ArrayList;

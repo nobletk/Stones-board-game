@@ -1,4 +1,4 @@
-package boardGame.model;
+package boardGame.Movement;
 
 /**
  * An interface representing row and column directional changes.

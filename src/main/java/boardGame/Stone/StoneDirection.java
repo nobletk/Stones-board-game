@@ -1,4 +1,6 @@
-package boardGame.model;
+package boardGame.Stone;
+
+import boardGame.Movement.Direction;
 
 /**
  * Class representing stone directional changes.

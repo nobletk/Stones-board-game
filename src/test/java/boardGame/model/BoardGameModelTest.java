@@ -1,5 +1,9 @@
 package boardGame.model;
 
+import boardGame.BoardGameModel.BoardGameModel;
+import boardGame.Movement.Position;
+import boardGame.Stone.StoneColor;
+import boardGame.Stone.StoneDirection;
 import org.junit.jupiter.api.Test;
 
 import java.util.EnumSet;

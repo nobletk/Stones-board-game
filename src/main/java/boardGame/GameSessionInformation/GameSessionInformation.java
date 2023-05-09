@@ -1,4 +1,4 @@
-package boardGame;
+package boardGame.GameSessionInformation;
 
 
 @lombok.Data
