@@ -1,4 +1,4 @@
-package boardGame.model;
+package boardGame.Movement;
 
 /**
  * Class extending the Record class that returns the new calculated position of the stone.

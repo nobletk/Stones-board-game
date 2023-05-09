@@ -1,5 +1,7 @@
-package boardGame.model;
+package boardGame.Stone;
 
+import boardGame.Movement.Direction;
+import boardGame.Movement.Position;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 

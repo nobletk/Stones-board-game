@@ -1,7 +1,7 @@
-package boardGame;
+package boardGame.Controller;
 
+import boardGame.GameSessionInformation.GameSessionInformation;
 import com.google.gson.GsonBuilder;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +14,6 @@ import javafx.stage.Stage;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 

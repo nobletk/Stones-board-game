@@ -1,4 +1,4 @@
-package boardGame.model;
+package boardGame.Stone;
 
 /**
  * Class representing the color of the stones.

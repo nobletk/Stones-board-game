@@ -1,4 +1,4 @@
 /**
- * Includes main application including controllers for javafx.
+ * Includes main application.
  */
 package boardGame;
