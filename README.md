@@ -1,8 +1,8 @@
-# Stones Game Board
+# Stones Board Game
 
 The following game is played by two players.
 
- It's a game board that consists of 5 rows and 5 columns. The game is played with 7 blue stones 
+ It's a board game that consists of 5 rows and 5 columns. The game is played with 7 blue stones 
 and 7 red stones. Initially, the stones are arranged on the board as follows:
 
 ![](BoardGame.png)
